@@ -228,7 +228,10 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
     limit: 10 //每页显示的数量
     ,loading: true //请求数据时，是否显示loading
     ,cellMinWidth: 60 //所有单元格默认最小宽度
-    ,defaultToolbar: ['filter', 'exports', 'print'] //工具栏右侧图标
+    ,defaultToolbar: ['add','edit','delete','filter', 'exports', 'print'] //工具栏右侧图标
+    ,add:null
+    ,edit:null
+    ,delete:null
     ,autoSort: true //是否前端自动排序。如果否，则需自主排序（通常为服务端处理好排序）
     ,text: {
       none: '无数据'
@@ -443,6 +446,21 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
         title: '打印'
         ,layEvent: 'LAYTABLE_PRINT'
         ,icon: 'layui-icon-print'
+      }
+      ,add: {
+        title: '新增'
+        ,layEvent: 'LAYTABLE_ADD'
+        ,icon: 'layui-icon-add-1'
+      }
+      ,edit: {
+        title: '编辑'
+        ,layEvent: 'LAYTABLE_EDIT'
+        ,icon: 'layui-icon-edit'
+      }
+      ,delete: {
+        title: '删除'
+        ,layEvent: 'LAYTABLE_DELETE'
+        ,icon: 'layui-icon-delete'
       }
     }, iconElem = [];
     
@@ -1328,6 +1346,21 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports){
           printWin.document.close();
           printWin.print();
           printWin.close();
+        break;
+        case 'LAYTABLE_ADD': //增加
+          if(options.add && typeof options.add === 'function'){
+            options.add();
+          }
+          break;
+        case 'LAYTABLE_EDIT': //编辑
+          if(options.edit && typeof options.edit === 'function'){
+            options.edit();
+          }
+        break;
+        case 'LAYTABLE_DELETE': //删除
+          if(options.delete && typeof options.delete === 'function'){
+            options.delete();
+          }
         break;
       }
       
